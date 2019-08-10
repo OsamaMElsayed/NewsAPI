@@ -8,15 +8,35 @@
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController ,UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    var newsItems:[NewsItem]!
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (newsItems == nil ){ return 0}
+        return newsItems.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        cell?.textLabel?.text = newsItems[indexPath.row].title
+        return cell!
+    }
+    
+    var ws: WebService!
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
         // Do any additional setup after loading the view, typically from a nib.
-        var ws = WebService()
+          ws = WebService()
         ws.searchNews(searchTerm: ""){
             newsItems in
-            print(newsItems[0].content)
+            self.newsItems = newsItems
+            DispatchQueue.main.async{
+            self.tableView.reloadData()
+            }
         }
     }
 

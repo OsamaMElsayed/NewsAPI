@@ -34,6 +34,5 @@ class NewsItem
         if let image = dict["urlToImage"] as? String{
             self.imageUrl = image
         }
-
     }
 }
