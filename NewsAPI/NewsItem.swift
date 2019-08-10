@@ -9,7 +9,7 @@
 import Foundation
 class NewsItem
 {
-    public var newsPaper:String!
+    
     public var title:String!
     public var content:String!
     public var author:String!
@@ -17,22 +17,23 @@ class NewsItem
     public var imageUrl:String!
     
     init(dict : [String:Any]) {
-        guard let newsPaper = dict["name"] as? String ,
-        let title = dict["title"] as? String ,
-        let content = dict["content"] as? String ,
-        let author = dict["author"] as? String ,
-        let date = dict["publishedAt"] as? String ,
-        let imageUrl = dict["urlToImage"] as? String
-        else{
-            return
-        }
-        self.newsPaper = newsPaper
-        self.title = title
-        self.content = content
-        self.author = author
-        self.date = date
-        self.imageUrl = imageUrl
         
+        
+        if let title = dict["title"] as? String{
+            self.title = title
+        }
+        if let content = dict["content"] as? String{
+            self.content = content
+        }
+        if let author = dict["author"] as? String{
+            self.author = author
+        }
+        if let date = dict["publishedAt"] as? String{
+            self.date = date
+        }
+        if let image = dict["urlToImage"] as? String{
+            self.imageUrl = image
+        }
+
     }
-    
 }
